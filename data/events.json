@@ -1,0 +1,62 @@
+{
+ "note": "Curated calendar. Times are US Eastern. kind: fed | data | earnings | conf | nyc | ipo | holiday | auction. nyc=true means it happens in New York City. Edit freely; the page merges this with live_events.json.",
+ "items": [
+  {"date":"2026-11-16","time":"08:30","kind":"data","title":"Empire State Manufacturing (Nov)","where":"NY Fed","nyc":false,"url":"https://www.newyorkfed.org/survey/empire/empiresurvey_overview"},
+  {"date":"2026-11-16","time":"09:05","kind":"fed","title":"NY Fed FX Market Structure Conference · Williams opens","where":"Federal Reserve Bank of New York","nyc":true,"note":"Keynote by Head of Markets Anna Nordstrom","url":"https://www.newyorkfed.org/newsevents/mediaadvisory/2026/1104-2026a"},
+  {"date":"2026-11-16","time":"12:00","kind":"fed","title":"Chair Warsh: opening remarks, Productivity & Jobs Task Force","where":"San Francisco","nyc":false,"url":"https://www.federalreserve.gov/newsevents/calendar.htm"},
+  {"date":"2026-11-16","time":null,"kind":"conf","title":"J.P. Morgan Global Technology, Innovation & Growth Conference","where":"J.P. Morgan","nyc":false},
+  {"date":"2026-11-16","time":null,"kind":"conf","title":"Macquarie Energy Transition & Commodities Conference","where":"Macquarie","nyc":false},
+
+  {"date":"2026-11-17","time":"08:00","kind":"earnings","title":"HD earnings (BMO)","where":"Home Depot","nyc":false,"note":"Q3 · consensus EPS $3.84","url":"https://ir.homedepot.com/"},
+  {"date":"2026-11-17","time":"08:00","kind":"earnings","title":"DIS earnings (BMO)","where":"Walt Disney","nyc":false,"url":"https://thewaltdisneycompany.com/investor-relations/"},
+  {"date":"2026-11-17","time":"08:30","kind":"data","title":"Retail sales (Oct) · import & export prices","where":"Census / BLS","nyc":false,"url":"https://www.census.gov/retail/"},
+  {"date":"2026-11-17","time":"09:15","kind":"data","title":"Industrial production (Oct)","where":"Federal Reserve","nyc":false,"url":"https://www.federalreserve.gov/releases/g17/current/"},
+  {"date":"2026-11-17","time":"10:00","kind":"data","title":"NAHB housing market index (Nov)","where":"NAHB","nyc":false},
+  {"date":"2026-11-17","time":"16:20","kind":"earnings","title":"NVDA earnings (AMC)","where":"Nvidia","nyc":false,"note":"Q3 FY27 · options imply ~8% move","url":"https://investor.nvidia.com/"},
+  {"date":"2026-11-17","time":null,"kind":"conf","title":"TD Cowen Financials & Fintech Conference","where":"TD Cowen","nyc":false},
+  {"date":"2026-11-17","time":null,"kind":"conf","title":"Citizens Financial Services Conference","where":"Citizens","nyc":false},
+  {"date":"2026-11-17","time":null,"kind":"conf","title":"J.P. Morgan Ultimate Services Investor Conference","where":"J.P. Morgan","nyc":false},
+
+  {"date":"2026-11-18","time":"08:00","kind":"earnings","title":"TGT earnings (BMO)","where":"Target","nyc":false},
+  {"date":"2026-11-18","time":"08:00","kind":"earnings","title":"LOW earnings (BMO)","where":"Lowe's","nyc":false},
+  {"date":"2026-11-18","time":"08:00","kind":"earnings","title":"TJX earnings (BMO)","where":"TJX Companies","nyc":false},
+  {"date":"2026-11-18","time":"08:30","kind":"data","title":"Housing starts & building permits (Oct)","where":"Census","nyc":false},
+  {"date":"2026-11-18","time":"09:00","kind":"nyc","title":"NYT DealBook Summit","where":"Appel Room, Jazz at Lincoln Center, 10 Columbus Circle","nyc":true,"note":"Invitation only · livestreamed by The New York Times","url":"https://www.nytimes.com/dealbook"},
+  {"date":"2026-11-18","time":null,"kind":"nyc","title":"NYSE Industrials Investor Access Day","where":"New York Stock Exchange, 11 Wall St","nyc":true,"url":"https://www.nyse.com/"},
+  {"date":"2026-11-18","time":"14:00","kind":"fed","title":"FOMC minutes (Oct 27–28 meeting)","where":"Federal Reserve","nyc":false,"note":"Watch how close the majority came to a hike","url":"https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"},
+  {"date":"2026-11-18","time":"18:00","kind":"nyc","title":"CFA Society NY · International Investment Group","where":"CFA Society NY, 1540 Broadway","nyc":true,"url":"https://cfany.org/events/"},
+
+  {"date":"2026-11-19","time":"08:00","kind":"earnings","title":"WMT earnings (BMO)","where":"Walmart","nyc":false},
+  {"date":"2026-11-19","time":"08:30","kind":"data","title":"Jobless claims · Philly Fed manufacturing","where":"DOL / Philadelphia Fed","nyc":false},
+  {"date":"2026-11-19","time":"09:30","kind":"ipo","title":"Anthropic expected to begin trading","where":"Nasdaq, Times Square","nyc":true,"note":"Expected date; confirm on the day","url":"https://www.nasdaq.com/market-activity/ipos"},
+  {"date":"2026-11-19","time":"16:05","kind":"earnings","title":"INTU earnings (AMC)","where":"Intuit","nyc":false},
+  {"date":"2026-11-19","time":null,"kind":"earnings","title":"BABA earnings","where":"Alibaba","nyc":false},
+  {"date":"2026-11-19","time":null,"kind":"conf","title":"Deutsche Bank Financial Services IRO Summit","where":"Deutsche Bank","nyc":false},
+  {"date":"2026-11-19","time":null,"kind":"conf","title":"J.P. Morgan European Financials Conference","where":"Europe","nyc":false},
+
+  {"date":"2026-11-20","time":"10:00","kind":"data","title":"UMich consumer sentiment (Nov)","where":"University of Michigan","nyc":false},
+  {"date":"2026-11-20","time":null,"kind":"fed","title":"Fed's Waller and Cook speak","where":"Federal Reserve","nyc":false,"note":"Cook dissented for a hike in October","url":"https://www.federalreserve.gov/newsevents/calendar.htm"},
+
+  {"date":"2026-11-25","time":"08:30","kind":"data","title":"GDP Q3 (2nd est.) · PCE inflation (Oct)","where":"BEA","nyc":false,"url":"https://www.bea.gov/news/schedule"},
+  {"date":"2026-11-25","time":null,"kind":"conf","title":"UBS BB Rio Commodities, Financial & Utilities Conference","where":"Rio de Janeiro","nyc":false},
+  {"date":"2026-11-26","time":null,"kind":"holiday","title":"Thanksgiving: NYSE, Nasdaq & bond market closed","where":"US markets","nyc":true},
+  {"date":"2026-11-27","time":"13:00","kind":"holiday","title":"Early close: stocks 1 PM, bonds 2 PM","where":"US markets","nyc":true},
+
+  {"date":"2026-12-01","time":null,"kind":"nyc","title":"Reuters NEXT 2026 (Dec 1–2)","where":"New York","nyc":true,"note":"Invitation only · broadcast globally","url":"https://www.reuters.com/events/"},
+  {"date":"2026-12-01","time":null,"kind":"conf","title":"BofA Securities Leveraged Finance Conference","where":"Bank of America","nyc":false},
+  {"date":"2026-12-01","time":null,"kind":"conf","title":"Morgan Stanley Global Consumer & Retail Conference","where":"Morgan Stanley","nyc":false},
+  {"date":"2026-12-02","time":null,"kind":"conf","title":"Morgan Stanley Data Center & AI Summit","where":"Morgan Stanley","nyc":false},
+  {"date":"2026-12-02","time":"18:00","kind":"nyc","title":"CFA Society NY · Institutional Asset Management Group","where":"CFA Society NY, 1540 Broadway","nyc":true,"url":"https://cfany.org/events/"},
+  {"date":"2026-12-04","time":"08:30","kind":"data","title":"Jobs report (Nov)","where":"BLS","nyc":false,"url":"https://www.bls.gov/schedule/news_release/empsit.htm"},
+  {"date":"2026-12-08","time":null,"kind":"nyc","title":"Goldman Sachs U.S. Financial Services Conference","where":"New York","nyc":true,"note":"Bank CEOs give year-end outlooks here","url":"https://www.goldmansachs.com/"},
+  {"date":"2026-12-08","time":"08:30","kind":"data","title":"Productivity & costs (Q3, revised)","where":"BLS","nyc":false},
+  {"date":"2026-12-09","time":"14:00","kind":"fed","title":"FOMC decision · Warsh press conference 2:30 PM","where":"Federal Reserve","nyc":false,"note":"Range now 3.75–4.00%","url":"https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"},
+  {"date":"2026-12-10","time":"08:30","kind":"data","title":"CPI (Nov)","where":"BLS","nyc":false,"url":"https://www.bls.gov/cpi/"},
+  {"date":"2026-12-15","time":"08:30","kind":"data","title":"PPI (Nov) · import & export prices","where":"BLS","nyc":false},
+  {"date":"2026-12-24","time":"13:00","kind":"holiday","title":"Early close: stocks 1 PM, bonds 2 PM","where":"US markets","nyc":true},
+  {"date":"2026-12-25","time":null,"kind":"holiday","title":"Christmas: US markets closed","where":"US markets","nyc":true},
+  {"date":"2027-01-01","time":null,"kind":"holiday","title":"New Year's Day: US markets closed","where":"US markets","nyc":true},
+  {"date":"2027-01-08","time":"08:30","kind":"data","title":"Jobs report (Dec)","where":"BLS","nyc":false},
+  {"date":"2027-01-13","time":"08:30","kind":"data","title":"CPI (Dec)","where":"BLS","nyc":false}
+ ]
+}

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WSA — Wall Street for Assem</title>
+<meta name="description" content="A live multi-screen market desk: sessions, rates, commodities, people moves, New York events, a news traffic light and a voice assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="bar gut">
+    <a class="brand" href="#desk" title="Wall Street for Assem">WSA <em>Wall Street for Assem</em></a>
+    <nav class="nav" aria-label="Screens">
+      <a href="#desk" data-s="desk"><kbd>1</kbd>Desk</a>
+      <a href="#street" data-s="street"><kbd>2</kbd>The Street</a>
+      <a href="#markets" data-s="markets"><kbd>3</kbd>Markets</a>
+      <a href="#events" data-s="events"><kbd>4</kbd>Events</a>
+      <a href="#radar" data-s="radar" id="nav-radar"><kbd>5</kbd>Radar<span class="dot"></span></a>
+      <a href="#kit" data-s="kit"><kbd>6</kbd>Kit</a>
+    </nav>
+    <div class="clockbox">
+      <span class="pill" id="nyse-pill"><span class="dot"></span><span id="nyse-state">NYSE</span></span>
+      <span class="big" id="ny-big">--:--:--</span>
+      <button class="iconbtn" type="button" id="popout" title="Open this screen in a new window for another monitor">Pop out ↗</button>
+    </div>
+  </div>
+  <a class="breaking gut" id="breaking" hidden target="_blank" rel="noopener"><b>● Breaking</b><span id="breaking-t"></span><small id="breaking-m"></small></a>
+  <div class="tape" id="tape"></div>
+</header>
+
+<main class="gut">
+
+<!-- ======================= 1 DESK ======================= -->
+<section class="screen" id="s-desk" data-title="Desk">
+  <div class="shead">
+    <div><h1 id="greet">Good morning</h1><p id="greet-sub">Here's the desk.</p></div>
+    <div class="next" id="next-up"></div>
+  </div>
+
+  <article class="panel">
+    <header><div class="hl"><h2>Market sessions</h2><span class="cad live">Live</span></div>
+      <div class="tabs" role="group" aria-label="Timeline time zone" id="tz-tabs">
+        <button type="button" data-tz="America/New_York" aria-pressed="true">New York time</button>
+        <button type="button" data-tz="local" aria-pressed="false">My time</button>
+        <button type="button" data-tz="Europe/London" aria-pressed="false">London time</button>
+      </div>
+    </header>
+    <div class="sess" id="sess"></div>
+    <div class="foot">Solid bar = main session · striped = pre-market, after-hours or overnight trading · green = open now. US holidays and early closes are built in; other exchanges' holidays are partial.</div>
+  </article>
+
+  <div class="grid">
+    <article class="panel s4">
+      <header><div class="hl"><h2>Markets</h2><span class="cad live">Live</span></div><span class="asof">1D · tap a row</span></header>
+      <div class="w h560" id="w-overview"></div>
+    </article>
+    <article class="panel s4">
+      <header><div class="hl"><h2>News radar</h2><span class="cad feed">10 min</span></div><a class="asof" href="#radar">Full radar →</a></header>
+      <div class="w h560 scroll" id="desk-radar"><div class="empty">Loading…</div></div>
+    </article>
+    <article class="panel s4">
+      <header><div class="hl"><h2>Today in New York</h2><span class="cad">ET</span></div><a class="asof" href="#events">All events →</a></header>
+      <div class="w h560 scroll" id="desk-today"><div class="empty">Loading…</div></div>
+    </article>
+  </div>
+
+  <div class="grid">
+    <article class="panel s4">
+      <header><div class="hl"><h2>The wire</h2><span class="cad feed">10 min</span></div><span class="asof" id="wire-asof"></span></header>
+      <div class="w h460 scroll"><ul class="list" id="wire"><li class="empty">Loading headlines…</li></ul></div>
+    </article>
+    <article class="panel s5">
+      <header><div class="hl"><h2>Live TV</h2><span class="cad live">Live</span></div>
+        <div class="tabs" role="group" aria-label="Channel" id="tv-tabs">
+          <button type="button" aria-pressed="true" data-ch="UCIALMKvObZNtJ6AmdCLP7Lg">Bloomberg</button>
+          <button type="button" aria-pressed="false" data-ch="UCEAZeUIeJs0IjQiqTCdVSIg">Yahoo Finance</button>        </div>
+      </header>
+      <div class="tv" id="tv"><button type="button" class="btn" id="tv-start">▶ Play live stream</button></div>
+      <div class="tvlinks">
+        <a href="https://www.bloomberg.com/live" target="_blank" rel="noopener">Bloomberg TV</a>
+        <a href="https://www.cnbc.com/live-tv/" target="_blank" rel="noopener">CNBC</a>
+        <a href="https://www.foxbusiness.com/" target="_blank" rel="noopener">Fox Business</a>
+        <a href="https://finance.yahoo.com/videos/" target="_blank" rel="noopener">Yahoo Finance</a>
+      </div>
+    </article>
+    <article class="panel s3">
+      <header><div class="hl"><h2>Treasury curve</h2><span class="cad">Daily</span></div><a class="asof" href="#markets">Rates →</a></header>
+      <svg class="chart" id="curve-mini" viewBox="0 0 360 210" role="img" aria-label="US Treasury yield curve"></svg>
+      <div id="credit-mini"></div>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= 2 THE STREET ======================= -->
+<section class="screen" id="s-street" data-title="The Street" hidden>
+  <div class="shead">
+    <div><h1>The <em>Street</em></h1><p>Who's moving, who's talking. Big names in the news, hires and departures, and what market voices are posting.</p></div>
+    <span class="asof" id="social-asof"></span>
+  </div>
+  <article class="panel">
+    <header><div class="hl"><h2>Trending on StockTwits</h2><span class="cad feed">10 min</span></div><span class="asof">Retail chatter · tap to chart</span></header>
+    <div class="pad"><div class="chips" id="trending"><span class="muted">Loading…</span></div></div>
+  </article>
+  <div class="grid">
+    <article class="panel s4">
+      <header><div class="hl"><h2>People moves</h2><span class="cad feed">10 min</span></div><span class="asof">Hires, promotions, exits · last 7–14 days</span></header>
+      <div class="w h700 scroll"><ul class="list" id="moves"><li class="empty">Loading…</li></ul></div>
+    </article>
+    <article class="panel s5">
+      <header><div class="hl"><h2>Big names</h2><span class="cad feed">10 min</span></div><span class="asof">Latest headlines mentioning them</span></header>
+      <div class="w h700 scroll"><div class="people" id="people"><div class="empty">Loading…</div></div></div>
+    </article>
+    <article class="panel s3">
+      <header><div class="hl"><h2>Voices</h2><span class="cad feed">10 min</span></div><span class="asof">Bluesky</span></header>
+      <div class="w h700 scroll" id="posts"><div class="empty">Loading…</div></div>
+    </article>
+  </div>
+  <article class="panel">
+    <header><div class="hl"><h2>Follow on X</h2></div><span class="asof">X doesn't allow free live feeds, so these open the accounts directly</span></header>
+    <div class="links c4" id="xlist"></div>
+  </article>
+</section>
+
+<!-- ======================= 3 MARKETS ======================= -->
+<section class="screen" id="s-markets" data-title="Markets" hidden>
+  <div class="shead">
+    <div><h1>Stocks, rates <em>&amp; commodities</em></h1><p>Live charts and boards. Say “Jarvis, chart gold” or tap a tab.</p></div>
+  </div>
+  <div class="grid">
+    <article class="panel s8">
+      <header><div class="hl"><h2>Chart</h2><span class="cad live">Live</span></div><div class="tabs" role="group" aria-label="Chart symbol" id="chart-tabs"></div></header>
+      <div class="w h620" id="w-chart"></div>
+    </article>
+    <article class="panel s4">
+      <header><div class="hl"><h2>Movers</h2><span class="cad live">Live</span></div><span class="asof">US gainers, losers, most active</span></header>
+      <div class="w h620" id="w-hot"></div>
+    </article>
+  </div>
+  <div class="grid">
+    <article class="panel s6">
+      <header><div class="hl"><h2>Commodities board</h2><span class="cad live">Live</span></div><span class="asof">Energy · metals · grains · softs · livestock</span></header>
+      <div class="w h560" id="w-cmd"></div>
+    </article>
+    <article class="panel s6">
+      <header><div class="hl"><h2>S&amp;P 500 heatmap</h2><span class="cad live">Live</span></div><span class="asof">Size = market cap · colour = % today</span></header>
+      <div class="w h560" id="w-heat"></div>
+    </article>
+  </div>
+  <div class="grid">
+    <article class="panel s7">
+      <header><div class="hl"><h2>US Treasury curve</h2><span class="cad">Daily</span></div><span class="asof" id="curve-asof"></span></header>
+      <svg class="chart" id="curve-big" viewBox="0 0 760 330" role="img" aria-label="US Treasury par yield curve: today, a week ago, a month ago"></svg>
+      <div class="foot">Source: US Treasury daily par yield curve. Updates after the 3:30 PM ET fix.</div>
+    </article>
+    <article class="panel s5">
+      <header><div class="hl"><h2>Credit &amp; funding</h2><span class="cad">Daily</span></div><span class="asof">FRED · last 6 months</span></header>
+      <div id="credit"></div>
+    </article>
+  </div>
+  <article class="panel">
+    <header><div class="hl"><h2>FX cross rates</h2><span class="cad live">Live</span></div></header>
+    <div class="w h380" id="w-fx"></div>
+  </article>
+</section>
+
+<!-- ======================= 4 EVENTS ======================= -->
+<section class="screen" id="s-events" data-title="Events" hidden>
+  <div class="shead">
+    <div><h1>Events <em>&amp; the calendar</em></h1><p>What's on in New York and across US capital markets: the Fed, data releases, earnings, auctions, conferences and evening meetups. All times Eastern.</p></div>
+    <div class="tabs" role="group" aria-label="Filter events" id="ev-filter">
+      <button type="button" data-k="all" aria-pressed="true">All</button>
+      <button type="button" data-k="nyc" aria-pressed="false">In NYC</button>
+      <button type="button" data-k="fed" aria-pressed="false">Fed</button>
+      <button type="button" data-k="data" aria-pressed="false">Data</button>
+      <button type="button" data-k="earnings" aria-pressed="false">Earnings</button>
+      <button type="button" data-k="auction" aria-pressed="false">Auctions</button>
+      <button type="button" data-k="conf" aria-pressed="false">Conferences</button>
+    </div>
+  </div>
+  <div class="grid">
+    <article class="panel s4"><header><h2 id="today-h">Today</h2><span class="asof" id="today-d"></span></header><div class="w h520 scroll" id="ev-today"></div></article>
+    <article class="panel s4"><header><h2 id="tmrw-h">Tomorrow</h2><span class="asof" id="tmrw-d"></span></header><div class="w h520 scroll" id="ev-tmrw"></div></article>
+    <article class="panel s4"><header><div class="hl"><h2>In New York</h2></div><span class="asof">Next 45 days, in person</span></header><div class="w h520 scroll" id="ev-nyc"></div></article>
+  </div>
+  <div class="grid">
+    <article class="panel s7"><header><h2>Coming up</h2><span class="asof">Next 60 days</span></header><div class="w h620 scroll" id="ev-all"></div></article>
+    <article class="panel s5"><header><div class="hl"><h2>Global economic calendar</h2><span class="cad live">Live</span></div><span class="asof">US · EU · UK · JP · CN</span></header><div class="w h620" id="w-cal"></div></article>
+  </div>
+  <article class="panel">
+    <header><h2>Where to find more events</h2><span class="asof">Talks, panels, networking</span></header>
+    <div class="links c4" id="ev-dirs"></div>
+  </article>
+</section>
+
+<!-- ======================= 5 RADAR ======================= -->
+<section class="screen" id="s-radar" data-title="Radar" hidden>
+  <div class="shead">
+    <div><h1>News <em>radar</em></h1><p>Stories that several major outlets are running at once. When five or more (NYT, WSJ, Washington Post, Bloomberg, Reuters, AP, CNBC and others) cover the same story, it turns red and you get an alert.</p></div>
+    <div class="legend"><span><i style="background:var(--live)"></i>5+ outlets</span><span><i style="background:var(--amber)"></i>3–4</span><span><i style="background:var(--up)"></i>2</span>
+      <button class="btn ghost" type="button" id="alerts-btn">Turn on alerts</button></div>
+  </div>
+  <div class="grid">
+    <article class="panel s8">
+      <header><div class="hl"><h2>Stories by spread</h2><span class="cad feed">10 min</span></div>
+        <div class="tabs" role="group" aria-label="Filter" id="rad-filter">
+          <button type="button" data-l="all" aria-pressed="true">All</button>
+          <button type="button" data-l="red" aria-pressed="false">Red</button>
+          <button type="button" data-l="amber" aria-pressed="false">Amber+</button>
+        </div>
+      </header>
+      <div id="radar-list"><div class="empty">Loading…</div></div>
+      <div class="foot" id="radar-foot"></div>
+    </article>
+    <article class="panel s4">
+      <header><div class="hl"><h2>Breaking tape</h2><span class="cad live">Live</span></div>
+        <div class="tabs" role="group" aria-label="News feed" id="news-tabs">
+          <button type="button" aria-pressed="true" data-f="all">All</button>
+          <button type="button" aria-pressed="false" data-f="bond">Bonds</button>
+          <button type="button" aria-pressed="false" data-f="economic">Econ</button>
+          <button type="button" aria-pressed="false" data-f="futures">Cmdty</button>
+        </div>
+      </header>
+      <div class="w h700" id="w-news"></div>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= 6 KIT ======================= -->
+<section class="screen" id="s-kit" data-title="Kit" hidden>
+  <div class="shead"><div><h1>The <em>kit</em></h1><p>Bond math, the lexicon, microfinance metrics, sources and your notes.</p></div></div>
+  <article class="panel">
+    <header><h2>Bond calculator</h2><span class="asof">Price · yield · duration · convexity · DV01, per 100 face</span></header>
+    <div class="calc">
+      <form id="bf" onsubmit="return false">
+        <div class="field full"><label>Solve for</label>
+          <div class="seg2" role="group" aria-label="Solve for"><button type="button" id="m-price" aria-pressed="true">Price from yield</button><button type="button" id="m-yield" aria-pressed="false">Yield from price</button></div></div>
+        <div class="field"><label for="b-cpn">Coupon, %</label><input id="b-cpn" type="number" step="0.125" value="4.5"></div>
+        <div class="field"><label for="b-yrs">Years to maturity</label><input id="b-yrs" type="number" step="0.5" min="0.5" value="10"></div>
+        <div class="field" id="f-ytm"><label for="b-ytm">Yield (YTM), %</label><input id="b-ytm" type="number" step="0.01" value="5.10"></div>
+        <div class="field" id="f-px" hidden><label for="b-px">Clean price</label><input id="b-px" type="number" step="0.01" value="95.33"></div>
+        <div class="field"><label for="b-freq">Coupons / year</label><select id="b-freq"><option value="2" selected>2 · UST, US corporates</option><option value="1">1 · Eurobonds</option><option value="4">4 · some FRNs</option><option value="12">12 · monthly</option></select></div>
+        <div class="field full"><label>Presets (illustrative)</label>
+          <div class="seg2" role="group" aria-label="Presets"><button type="button" data-p="4.5,10,5.10">UST 10y</button><button type="button" data-p="4.75,30,5.25">UST 30y</button><button type="button" data-p="6.5,5,8.2">HY 5y</button><button type="button" data-p="9,3,11.5">MFI 3y</button></div></div>
+      </form>
+      <div class="out">
+        <div class="kpis">
+          <div class="kpi"><span class="label">Price</span><span class="big hl" id="o-px">—</span><span class="d" id="o-pxd">per 100</span></div>
+          <div class="kpi"><span class="label">Yield</span><span class="big" id="o-y">—</span><span class="d" id="o-cy">—</span></div>
+          <div class="kpi"><span class="label">Mod. duration</span><span class="big" id="o-md">—</span><span class="d" id="o-mac">—</span></div>
+          <div class="kpi"><span class="label">Convexity</span><span class="big" id="o-cx">—</span><span class="d">years²</span></div>
+          <div class="kpi"><span class="label">DV01</span><span class="big" id="o-dv">—</span><span class="d" id="o-dvm">—</span></div>
+        </div>
+        <svg class="chart" id="pyc" viewBox="0 0 900 220" role="img" aria-label="Price versus yield"></svg>
+        <div><div class="label" style="margin-bottom:6px">Price change if yields move</div><div class="shock" id="shock"></div></div>
+      </div>
+    </div>
+  </article>
+  <div class="grid">
+    <article class="panel s6">
+      <header><h2>Lexicon</h2><span class="asof" id="g-count"></span></header>
+      <div class="search"><input id="g-q" type="search" placeholder="Search: OAS, greenshoe, PAR30, contango…" autocomplete="off" aria-label="Search the lexicon"><div class="tabs" role="group" aria-label="Category" id="g-cats"></div></div>
+      <ul class="terms lex" id="gl"></ul>
+    </article>
+    <article class="panel s3">
+      <header><h2>Microfinance</h2></header>
+      <ul class="terms">
+        <li><b>PAR30</b> <span>— loans with a payment &gt;30 days late ÷ gross portfolio.</span></li>
+        <li><b>OSS</b> <span>— operating revenue ÷ (financial + operating + loan-loss expense). &gt;100% covers costs.</span></li>
+        <li><b>Portfolio yield</b> <span>— interest &amp; fees ÷ average portfolio; compare with cost of funds.</span></li>
+        <li><b>Funding stack</b> <span>— deposits, DFI loans, MIV debt, local bonds, social bonds.</span></li>
+      </ul>
+      <div class="links" id="mfi"></div>
+    </article>
+    <article class="panel s3">
+      <header><h2>Data &amp; downloads</h2></header>
+      <div class="links" id="data"></div>
+    </article>
+  </div>
+  <div class="grid">
+    <article class="panel s4">
+      <header><h2>Excel shortcuts</h2><span class="asof">Windows</span></header>
+      <ul class="terms keys">
+        <li><span>Paste values</span><kbd>Alt E S V</kbd></li><li><span>Lock reference</span><kbd>F4</kbd></li>
+        <li><span>Format cells</span><kbd>Ctrl 1</kbd></li><li><span>Trace precedents</span><kbd>Ctrl [</kbd></li>
+        <li><span>Toggle filter</span><kbd>Ctrl Shift L</kbd></li><li><span>AutoSum</span><kbd>Alt =</kbd></li>
+        <li><span>Freeze panes</span><kbd>Alt W F F</kbd></li><li><span>Jump to data edge</span><kbd>Ctrl ←↑→↓</kbd></li>
+        <li><span>Show formulas</span><kbd>Ctrl `</kbd></li>
+      </ul>
+    </article>
+    <article class="panel s4">
+      <header><h2>Formulas</h2></header>
+      <ul class="terms">
+        <li><b>Enterprise value</b><div class="formula">EV = Equity + Debt + Pref + Minority − Cash</div></li>
+        <li><b>WACC</b><div class="formula">E/V·Re + D/V·Rd·(1 − t)</div></li>
+        <li><b>CAPM</b><div class="formula">Re = Rf + β·(Rm − Rf)</div></li>
+        <li><b>Yield shock</b><div class="formula">ΔP/P ≈ −ModD·Δy + ½·Cx·Δy²</div></li>
+        <li><b>Leverage</b><div class="formula">Net debt / EBITDA</div></li>
+      </ul>
+    </article>
+    <article class="panel s4">
+      <header><h2>Watchlist &amp; notes</h2><span class="asof" id="n-saved">Saved in this browser</span></header>
+      <div class="pad">
+        <form id="wl-form"><input id="wl-in" class="mono" placeholder="e.g. NYSE:JPM, TLT" autocomplete="off" aria-label="Ticker"><button class="btn" type="submit">Add</button></form>
+        <div class="chips" id="wl"></div>
+        <textarea id="notes" aria-label="Desk notes" placeholder="Questions for the MD, deals to read up on… Jarvis can add notes: “Jarvis, note: call Sarah about the BBB deal.”"></textarea>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer class="colophon">
+  <span>Live quotes, charts and news widgets by <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView</a> (some prices are CFD or delayed). Headlines, people and events are refreshed from public feeds about every 10 minutes.</span>
+  <span id="data-status"></span>
+</footer>
+</main>
+
+<!-- Jarvis -->
+<div class="heard" id="heard" hidden></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="jarvis">
+  <section class="jp" id="jp" hidden aria-label="Jarvis">
+    <header><b>Jarvis</b><span class="asof" id="j-mic">Voice ready</span><button class="iconbtn" type="button" id="j-help-btn">Commands</button><button class="iconbtn" type="button" id="j-close" aria-label="Close">✕</button></header>
+    <div class="jhelp" id="j-help">
+      Say <code>Jarvis</code> then:
+      <code>desk</code> <code>street</code> <code>markets</code> <code>events</code> <code>radar</code> <code>kit</code> ·
+      <code>chart gold</code> <code>chart Nvidia</code> ·
+      <code>brief me</code> <code>what's hot</code> ·
+      <code>what's on today</code> <code>tomorrow</code> ·
+      <code>when does London open</code> <code>time in Tokyo</code> ·
+      <code>define convexity</code> ·
+      <code>note …</code> <code>add JPM to watchlist</code> ·
+      <code>play TV</code> <code>stop TV</code> · <code>next screen</code> · <code>stop</code>
+    </div>
+    <div class="jlog" id="jlog"></div>
+    <div class="opts">
+      <label><input type="checkbox" id="j-wake"> Always listening for “Jarvis”</label>
+      <label><input type="checkbox" id="j-speak" checked> Speak replies</label>
+      <label><input type="checkbox" id="j-alerts"> Read red alerts aloud</label>
+    </div>
+    <form id="j-form"><input id="j-in" placeholder="Type a command, e.g. chart brent" autocomplete="off" aria-label="Command"><button class="btn" type="submit">Go</button></form>
+  </section>
+  <button class="orb" type="button" id="orb" aria-label="Jarvis: click to talk"><canvas id="orb-c" width="168" height="168"></canvas><span class="state" id="orb-state">Jarvis</span></button>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/jarvis.js"></script>
+</body>
+</html>
