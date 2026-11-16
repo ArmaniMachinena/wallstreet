@@ -42,6 +42,10 @@ Voice works in Chrome and Edge (and Safari 17+). The browser asks for the microp
 
 GitHub's scheduler can run a few minutes late at busy times.
 
+## Password
+
+The site opens behind a password screen. Only a salted SHA-256 hash is stored in `index.html` (`SALT`, `HASH`). To change the password, compute `sha256(SALT + new_password)` and replace `HASH`. This keeps casual visitors out; it is not encryption, because the page code and data files are public in this repository.
+
 ## Setup (once)
 
 1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**

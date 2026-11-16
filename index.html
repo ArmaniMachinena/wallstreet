@@ -9,7 +9,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/app.css">
 </head>
-<body>
+<body class="locked">
+<div id="gate" role="dialog" aria-label="Sign in">
+  <form id="gate-f" autocomplete="off">
+    <div class="g-brand">WSA</div>
+    <div class="g-sub">Wall Street for Assem</div>
+    <label for="gate-pw" class="label">Password</label>
+    <input id="gate-pw" type="password" autocomplete="current-password" autofocus>
+    <label class="g-rem"><input type="checkbox" id="gate-rem" checked> Remember this device</label>
+    <button class="btn" type="submit">Open the desk</button>
+    <p class="g-err" id="gate-err" hidden>Wrong password. Check the capital letters and try again.</p>
+  </form>
+</div>
 
 <header class="top">
   <div class="bar gut">
@@ -346,7 +357,24 @@
   <button class="orb" type="button" id="orb" aria-label="Jarvis: click to talk"><canvas id="orb-c" width="168" height="168"></canvas><span class="state" id="orb-state">Jarvis</span></button>
 </div>
 
-<script src="assets/app.js"></script>
-<script src="assets/jarvis.js"></script>
+<script>
+(function(){
+  var SALT = "eeeb6ad3b96afadd", HASH = "d037ebc3ef62cf2264193252955a3f30492f3636b90a3bbe0b755041740f5b03", KEY = "wsa-unlock";
+  function boot(){
+    document.body.classList.remove("locked"); var g = document.getElementById("gate"); if (g) g.remove();
+    ["assets/app.js","assets/jarvis.js"].reduce(function(p, src){ return p.then(function(){ return new Promise(function(res){ var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = res; document.body.appendChild(s); }); }); }, Promise.resolve());
+  }
+  async function sha(t){ var b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return Array.from(new Uint8Array(b)).map(function(x){ return x.toString(16).padStart(2,"0"); }).join(""); }
+  var saved = null; try { saved = localStorage.getItem(KEY) || sessionStorage.getItem(KEY); } catch(e){}
+  if (saved === HASH) { boot(); return; }
+  document.getElementById("gate-f").addEventListener("submit", async function(e){
+    e.preventDefault();
+    var h = await sha(SALT + document.getElementById("gate-pw").value);
+    if (h !== HASH) { document.getElementById("gate-err").hidden = false; document.getElementById("gate-pw").select(); return; }
+    try { (document.getElementById("gate-rem").checked ? localStorage : sessionStorage).setItem(KEY, HASH); } catch(e){}
+    boot();
+  });
+})();
+</script>
 </body>
 </html>
